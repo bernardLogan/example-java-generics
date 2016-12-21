@@ -4,7 +4,7 @@
 package com.mycompany.generics;
 
 /**
- * @author John
+ * @author ilker
  *
  */
 public class MainEntry {
