@@ -87,7 +87,7 @@ public class ShowStaticGenericMethodsAndBounds {
 		}
 		// NOTE ilker read is OK (above), but not write (below)
 		// NOTE ilker, due to "upper bounding" the input list, listReadOnly, it becomes a read only list, since due to "upper bounding" one can not be sure what the list is really pointing to (could be List<Integer>, could be List<Float> etc), so compiler won't let you add to it. Will only let you read it.
-//		list.add(new Integer(1));	// NOT allowed
+//		listReadOnly.add(new Integer(1));	// NOT allowed
 		
 		return sum;
 	}
@@ -109,6 +109,11 @@ public class ShowStaticGenericMethodsAndBounds {
 		listWriteOnly.add(new Integer(1));
 		System.out.println("AFTER adding 1, listWriteOnly:" + listWriteOnly);
 		
+		// NOTE ilker reading listWriteOnly as Object is NOT really reading. But that's all you can read
+		for (Object o : listWriteOnly) {
+			System.out.println("o:" + o);
+		}
+		
 		return sum;
 	}
 	
@@ -122,8 +127,11 @@ public class ShowStaticGenericMethodsAndBounds {
 		lists.add(s2);
 
 		String s3 = new String("kiris");
-		String returnedStr = ShowStaticGenericMethodsAndBounds.add2collection(s3, lists);
+		String returnedStr = ShowStaticGenericMethodsAndBounds.<String>add2collection(s3, lists);
 		System.out.println("returnedStr:" + returnedStr);
+		
+//		ShowStaticGenericMethodsAndBounds.add2collection(new Integer(123), lists);	// NO intentionally
+		
 		System.out.println("EOF MyCollectionUtility::test_add2collection");		
 	}
 
@@ -134,10 +142,16 @@ public class ShowStaticGenericMethodsAndBounds {
 		lists.add(new String("ilker"));
 //		String returnedStr = MyCollectionUtility.addNumberOrItsChildren2collection(new String("kiris"), lists);
 
+		
+		// Object <-- Number |<-- Integer
+		//                   |<-- Double
+		//                   |<-- Long	
+		//                   |<-- Float
+		//                   |<-- Byte	
 		List<Number> listOfNumber = new ArrayList<Number>();
 		listOfNumber.add(1);	// Integer
 		listOfNumber.add(2d);	// Double
-		listOfNumber.add(3f);	// Double
+		listOfNumber.add(3f);	// Float
 		Number returnedNumber = ShowStaticGenericMethodsAndBounds.addNumberOrItsChildren2collection(new Long(4), listOfNumber);
 		System.out.println("returnedNumber:" + returnedNumber);
 
@@ -148,7 +162,11 @@ public class ShowStaticGenericMethodsAndBounds {
 //		listOfInteger.add(50d);	// WRONG - NOTE can not add Double, Float etc. Only Integer (or if it could have, its children. Integer can not have children because it is final class)
 		Number returnedInteger = ShowStaticGenericMethodsAndBounds.addNumberOrItsChildren2collection(new Integer(40), listOfInteger);
 		System.out.println("returnedInteger:" + returnedInteger);
-		
+
+		// NOTE ilker below is intentionally NO
+//		List<String> listOfString = Arrays.asList("one", "two");
+//		String returnedString = ShowStaticGenericMethodsAndBounds.<String>addNumberOrItsChildren2collection("ilker", listOfString);
+
 		System.out.println("EOF MyCollectionUtility::test_addNumberOrItsChildren2collection");		
 	}
 	
