@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mycompany.expgenerics.generics.wildcards.why;
+package com.mycompany.expgenerics.generics.staticmethods.wildcards;
 
 /**
  * @author ilker
