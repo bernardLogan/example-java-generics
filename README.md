@@ -2,6 +2,7 @@
 Example Java project created via STS as Java Project, showing how to;
 - generic static methods (ShowMoreStaticGenericMethodsAndBounds, ShowStaticGenericMethodsAndBounds)
 - generic class (MyGenericClass)
+- generic interface (MyGenericInterface)
 - "wild char" ? of generic
 - "bound type" for interface
 - "bound type" with muliple interface

@@ -3,11 +3,14 @@
  */
 package com.mycompany.expgenerics.generics.classes;
 
+import com.mycompany.expgenerics.generics.interfaces.MyGenericInterface;
+
 /**
+ * Example "generic class"
  * @author ilker
  *
  */
-public class MyGenericClass<T> {
+public class MyGenericClass<T> implements MyGenericInterface<T> {
 	private T contained;
 	
 	public MyGenericClass(T _contained) {
@@ -28,7 +31,10 @@ public class MyGenericClass<T> {
 		MyGenericClass<String> myGenericClassOfString = new MyGenericClass<String>("ilker");
 		MyGenericClass<Integer> myGenericClassOfInteger = new MyGenericClass<Integer>(123);
 		MyGenericClass<MyClass> myGenericClassOfMyClass = new MyGenericClass<MyClass>(new MyClass());
-		System.out.println("EOF MyGenericClass::main");
+
+		MyGenericInterface<Float> myGenericCOfInteger = new MyGenericClass<Float>(123f);
+		
+		System.out.println("EOF MyGenericClass::main");	
 	}
 
 }
