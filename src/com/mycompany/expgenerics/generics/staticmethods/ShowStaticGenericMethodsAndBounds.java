@@ -262,6 +262,7 @@ public class ShowStaticGenericMethodsAndBounds {
 		// since below lowerBound ones can point to either below 2, can not read. But can write
 		List<? super Number> lowerBound_writeOnly1 = new ArrayList<Object>();
 		List<? super Number> lowerBound_writeOnly2 = new ArrayList<Number>();		
+//		List<? super Number> lowerBound_writeOnly3 = new ArrayList<Integer>();	// NO intentionally		
 		
 		upperBound_readOnly1 = Arrays.<Number>asList(1,2,3);
 		upperBound_readOnly1 = Arrays.<Integer>asList(10,20,30);
