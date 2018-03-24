@@ -16,9 +16,13 @@ public class ShowMoreStaticGenericMethodsAndBounds {
 
 /**
  * 
- * 	public static class A {  }
+ * 	public static class A implements AI {  }
 	public static class X extends A { } 
 	public static class Y extends A { }
+	
+	public class B extends A { }
+	public class C extends B { }
+	public class D extends C { }
 */
 	public static void whyGenericsWildcardsAndLowerOrUpperBounds() {
 		System.out.println("BEF ShowMoreStaticGenericMethodsAndBounds::whyGenericsWildcardsAndLowerOrUpperBounds");
@@ -26,6 +30,11 @@ public class ShowMoreStaticGenericMethodsAndBounds {
 		X x = new X();
 		Y y = new Y();
 		
+		A aa= new A();  A a3= new A();  
+		B b = new B();  B b2 = new B();  B b3 = new B();
+		C c = new C();  C c2 = new C();  C c3 = new C();
+		D d = new D();  D d2 = new D();  D d3 = new D();
+
 		List<A> listA = new ArrayList<A>();
 		List<B> listB = new ArrayList<B>();
 		List<C> listC = new ArrayList<C>();
@@ -33,6 +42,7 @@ public class ShowMoreStaticGenericMethodsAndBounds {
 		List<X> listX = new ArrayList<X>();
 		List<Y> listY = new ArrayList<Y>();
 		
+		// NOTE below 3 are OK, since listA is to contain instances of type A and x and y are also A
 		listA.add(a);	
 		listA.add(x);	
 		listA.add(y);		
@@ -47,6 +57,8 @@ public class ShowMoreStaticGenericMethodsAndBounds {
 		
 //		listY.add(a);	// WRONG - compilation error, a of A is NOT Y. Y isA A, but A isNot Y.
 		listY.add(y);
+
+		
 		
 		// can we do below 5 lines ?
 		List<A> listA2; 
@@ -83,16 +95,10 @@ public class ShowMoreStaticGenericMethodsAndBounds {
 //		listSuperC  = listD; // intentionally NO
 //		listSuperC  = listX; // intentionally NO
 //		listSuperC  = listY; // intentionally NO
-
 		
-		A aa= new A();  A a3= new A();  
-		B b = new B();  B b2 = new B();  B b3 = new B();
-		C c = new C();  C c2 = new C();  C c3 = new C();
-		D d = new D();  D d2 = new D();  D d3 = new D();
-
 		// A<--B<--C<--D
 		// can we do below 1 line ?
-//		List<? extends A> listExtendsA2 = new ArrayList<? extends A>();				// WRONG - compilation error
+//		List<? extends A> listExtendsA2 = new ArrayList<? extends A>();		// WRONG - compilation error
 //		List<? extends A> listExtendsA3 = new ArrayList<A>();	// OK
 //		List<? extends A> listExtendsA4 = new ArrayList<B>();	// OK
 		List<? extends A> listExtendsA5 = Arrays.<A>asList(aa, b, c, d);	// NOTE ilker - caller "directly" specifying the Type T, instead of relying on "inferring" it from inputs

@@ -1,8 +1,9 @@
 # example-java-generics
 Example Java project created via STS as Java Project, showing how to;
-- generic static methods (ShowMoreStaticGenericMethodsAndBounds, ShowStaticGenericMethodsAndBounds)
-- generic class (MyGenericClass)
 - generic interface (MyGenericInterface)
+- generic class (MyGenericClass)
+- generic static methods (ShowMoreStaticGenericMethodsAndBounds, ShowStaticGenericMethodsAndBounds)
+- "binding" see ShowMoreStaticGenericMethodsAndBounds, ShowStaticGenericMethodsAndBounds and ShowUpperAndLowerBounds
 - "wild char" ? of generic
 - "bound type" for interface
 - "bound type" with muliple interface
@@ -11,6 +12,8 @@ Example Java project created via STS as Java Project, showing how to;
 - "upper bound" of variable type
 - "lower bound" of method input
 - "upper bound" of method input
+- "upper bound" makes it; assignable to lists of boundType or its children. And becomes "read only". See ShowUpperAndLowerBounds.java, ShowStaticGenericMethodsAndBounds.java
+- "lower bound" makes it; assignable to lists of boundType or its parents. And becomes "write only". Can be read as Object only. See ShowUpperAndLowerBounds.java, ShowStaticGenericMethodsAndBounds.java
 
 ## Setup dependencies
 Make sure on your machine, you have;
@@ -33,7 +36,7 @@ git clone https://github.com/njit-it114/example-java-generics.git  whateverDirec
 
 ### to run
 click on this project
-Run As --> Java Application (select MainEntry or ShowStaticGenericMethodsAndBounds or ShowMoreStaticGenericMethodsAndBounds from list)
+Run As --> Java Application (select MainEntry or ShowStaticGenericMethodsAndBounds or ShowMoreStaticGenericMethodsAndBounds or ShowUpperAndLowerBounds from list)
 
 ## Project directory structure
 - README.md this read me file
