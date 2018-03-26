@@ -52,12 +52,14 @@ public class ShowUpperAndLowerBounds {
 		
 		// 1c read is OK; for loop and stream's forEach
 		for (Y y : upperBound2Y_readOnly) { }	// OK
+
 		upperBound2Y_readOnly.forEach(y -> {
 			System.out.println(y.getName());
 			System.out.println(y.getX());
 			System.out.println(y.getY()); // NOTE y is of type Y
 		});	
 	
+		upperBound2Y_readOnly.forEach((Y y) -> System.out.println(y));
 		
 		// 2 "lower bound" makes it; assignable to lists of boundType or its parents. And becomes "write only"
 		// 2a "lower bound" makes it; assignable to lists of boundType or its parents
@@ -85,6 +87,8 @@ public class ShowUpperAndLowerBounds {
 	}
 	
 	// BEF class hierarchy
+//	X <-- Y <--Z
+//	X <-- Y <--Z2
 	public static class X {
 		protected String name;
 		public X(String _name) { this.name = _name; }
@@ -93,19 +97,69 @@ public class ShowUpperAndLowerBounds {
 	}
 	public static class Y extends X {
 		public Y(String _name) { super(_name); }
+		@Override
 		protected String getName() { return "Y-" + name; }
 		protected String getY() { return "y-" + name; }
 	}
 	public static class Z extends Y {
 		public Z(String _name) { super(_name); }
+		@Override
 		protected String getName() { return "Z-" + name; }
 		protected String getZ() { return "z-" + name; }
 	}
 	public static class Z2 extends Y {
 		public Z2(String _name) { super(_name); }
+		@Override
 		protected String getName() { return "Z2-" + name; }
 		protected String getZ2() { return "z2-" + name; }
 	}
 	// EOF class hierarchy
+	
+	public static void expWithAdding2GenericLists(){
+		List<X> xs = new ArrayList<>();
+		xs.add(new X("xOne"));
+		xs.add(new Y("yOne"));
+		xs.add(new Z("zOne"));
+
+		List<Y> ys = new ArrayList<>();
+//		ys.add(new X("xOne"));	// NO
+		ys.add(new Y("yOne"));
+		ys.add(new Z("zOne"));
+		
+		List<Z> zs = new ArrayList<>();
+//		zs.add(new X("xOne"));	// NO
+//		zs.add(new Y("yOne"));	// NO
+		zs.add(new Z("zOne"));
+		
+//		staticMethodExtendsY(xs, new X("xUno"));	// NO	
+		staticMethodExtendsY(ys, new Y("yUno"));		
+		staticMethodExtendsY(zs, new Z("zUno"));		
+		
+		
+//		staticMethodUpperBound2Y(xs);	// NO
+		staticMethodUpperBound2Y(ys);
+		staticMethodUpperBound2Y(zs);
+	}
+	
+	// NOTE this is NOT upper bound. Just bound
+	public static<T extends Y> void staticMethodExtendsY(List<T> list, T e) {
+		// read     YES
+		for (T t : list) {
+			System.out.println(t);
+		}
+		
+		// write
+		list.add(e);	// YES
+	}
+	
+	public static void staticMethodUpperBound2Y(List<? extends Y> list) {
+		// read     YES
+		for (Y y : list) {
+			System.out.println(y);
+		}
+		
+		// write
+//		list.add(new Y("yBir"));	// NO
+	}
 	
 }
